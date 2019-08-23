@@ -36,10 +36,10 @@ document.write('<div class="znav-container znav " id="znav-container">\
                                                 <a href="/SelfishRouting/WazePublications.html"> Publications </a>\
                                             </li>\
                                             <li>\
-                                                <a href="/SelfishRouting/Data.html"> Data </a>\
+                                                <a href="/SelfishRouting/Data.html"> Traffic News </a>\
                                             </li>\
                                             <li>\
-                                                <a href="/SelfishRouting/Humor.html"> Terrific Traffic News </a>\
+                                                <a href="/SelfishRouting/Humor.html">  Terrific Coverage </a>\
                                             </li>\
                                         </ul>\
                                     </li>\
@@ -73,7 +73,7 @@ document.write('<div class="znav-container znav " id="znav-container">\
                                                 <a href="/SelfishRouting/Press.html"> In the News </a>\
                                             </li>\
                                             <li>\
-                                                <a href="/SelfishRouting/Book_Team.html"> Who we are </a>\
+                                                <a href="/SelfishRouting/Book_Team.html"> The Team </a>\
                                             </li>\
                                         </ul>\
                                     </li>\
