@@ -36,11 +36,9 @@ while ($row = @mysql_fetch_assoc($result)){
   $newnode = $parnode->append_child($node);
 
   $newnode->set_attribute("id", $row['id']);
-  $newnode->set_attribute("name", $row['name']);
-  $newnode->set_attribute("address", $row['address']);
+  $newnode->set_attribute("name", $row['title']);
   $newnode->set_attribute("lat", $row['lat']);
   $newnode->set_attribute("lng", $row['lng']);
-  $newnode->set_attribute("type", $row['type']);
 }
 
 $xmlfile = $doc->dump_mem();
