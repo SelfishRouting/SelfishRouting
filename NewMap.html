@@ -169,53 +169,55 @@
           }
         };
 
-          function initMap() {
+        function initMap() {
           var map = new google.maps.Map(document.getElementById('map'), {
             center: new google.maps.LatLng(-33.863276, 151.207977),
             zoom: 12
           });
           var infoWindow = new google.maps.InfoWindow;
 
-            // Change this depending on the name of your PHP or XML file
-            downloadUrl('markers.php', function(data) {
-              var xml = data.responseXML;
-              var markers = xml.documentElement.getElementsByTagName('marker');
-              Array.prototype.forEach.call(markers, function(markerElem) {
-                var id = markerElem.getAttribute('id');
-                var name = markerElem.getAttribute('name');
-                var address = markerElem.getAttribute('address');
-                var type = markerElem.getAttribute('type');
-                var point = new google.maps.LatLng(
-                    parseFloat(markerElem.getAttribute('lat')),
-                    parseFloat(markerElem.getAttribute('lng')));
+          // Change this depending on the name of your PHP or XML file
+          downloadUrl('http://dzdaniel84.pythonanywhere.com/articles', function(data) {
+            let data2 = data.json();
+            const json_list = data2.json_list.map((item, index) => ({
+              id: item.id,
+              title: item.title,
+              date: item.pub_year,
+              url: item.url,
+              lat: item.lat,
+              lng: item.lng,
+            }));
 
-                var infowincontent = document.createElement('div');
-                var strong = document.createElement('strong');
-                strong.textContent = name
-                infowincontent.appendChild(strong);
-                infowincontent.appendChild(document.createElement('br'));
+            Array.prototype.forEach.call(json_list, function(markerElem) {
+              var id = markerElem.id;
+              var name = markerElem.title;
+              var point = new google.maps.LatLng(
+                  parseFloat(markerElem.lat),
+                  parseFloat(markerElem.lng));
 
-                var text = document.createElement('text');
-                text.textContent = address
-                infowincontent.appendChild(text);
-                var icon = customLabel[type] || {};
-                var marker = new google.maps.Marker({
-                  map: map,
-                  position: point,
-                  label: icon.label
-                });
-                marker.addListener('click', function() {
-                  infoWindow.setContent(infowincontent);
-                  infoWindow.open(map, marker);
-                });
+              var infowincontent = document.createElement('div');
+              var strong = document.createElement('strong');
+              strong.textContent = name
+              infowincontent.appendChild(strong);
+              infowincontent.appendChild(document.createElement('br'));
+
+              var text = document.createElement('text');
+              text.textContent = title
+              infowincontent.appendChild(text);
+              var marker = new google.maps.Marker({
+                map: map,
+                position: point,
+              });
+              marker.addListener('click', function() {
+                infoWindow.setContent(infowincontent);
+                infoWindow.open(map, marker);
               });
             });
-          }
+          });
+        }
 
         function downloadUrl(url, callback) {
-          var request = window.ActiveXObject ?
-              new ActiveXObject('Microsoft.XMLHTTP') :
-              new XMLHttpRequest;
+          var request = new XMLHttpRequest;
 
           request.onreadystatechange = function() {
             if (request.readyState == 4) {
