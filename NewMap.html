@@ -179,8 +179,7 @@
           // Change this depending on the name of your PHP or XML file
           downloadUrl('https://dzdaniel84.pythonanywhere.com/articles', function(data) {
             console.log(data.response);
-            const resp = data.response.json();
-            const json_list = resp.json_list.map((item, index) => ({
+            const json_list = data.response.json_list.map((item, index) => ({
               id: item.id,
               title: item.title,
               date: item.pub_year,
