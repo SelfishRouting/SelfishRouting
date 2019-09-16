@@ -177,9 +177,9 @@
           var infoWindow = new google.maps.InfoWindow;
 
           // Change this depending on the name of your PHP or XML file
-          downloadUrl('http://dzdaniel84.pythonanywhere.com/articles', function(data) {
-            let data2 = data.json();
-            const json_list = data2.json_list.map((item, index) => ({
+          downloadUrl('https://dzdaniel84.pythonanywhere.com/articles', function(data) {
+            console.log(data);
+            const json_list = data.json_list.map((item, index) => ({
               id: item.id,
               title: item.title,
               date: item.pub_year,
