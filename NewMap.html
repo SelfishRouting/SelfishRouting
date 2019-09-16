@@ -179,7 +179,11 @@
           // Change this depending on the name of your PHP or XML file
           downloadUrl('https://dzdaniel84.pythonanywhere.com/articles', function(data) {
             console.log(data.response);
-            const json_list = data.response.json_list.map((item, index) => ({
+
+            var resp = JSON.parse(data.response);
+            console.log(resp);
+
+            const json_list = resp.json_list.map((item, index) => ({
               id: item.id,
               title: item.title,
               date: item.pub_year,
@@ -202,7 +206,7 @@
               infowincontent.appendChild(document.createElement('br'));
 
               var text = document.createElement('text');
-              text.textContent = title
+              text.textContent = name;
               infowincontent.appendChild(text);
               var marker = new google.maps.Marker({
                 map: map,
