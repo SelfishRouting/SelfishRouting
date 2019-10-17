@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Geolocation</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--  -->
+  <!--    Document Title-->
+  <!-- =============================================-->
+  <title>Selfish Routing | The Map </title>
+  <!--  -->
+  <!--    Favicons-->
+  <!--    =============================================-->
+  <script src="assets/js/favicon.js"></script>
+  <meta name="theme-color" content="#ffffff">
+  <!--  -->
+  <!--    Stylesheets-->
+  <!--    =============================================-->
+  <!-- Default stylesheets-->
+  <link href="assets/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Template specific stylesheets-->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,600" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,400i" rel="stylesheet">
+  <link href="assets/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="assets/lib/iconsmind/iconsmind.css" rel="stylesheet">
+  <link href="assets/lib/css-hamburgers/dist/hamburgers.css" rel="stylesheet">
+  <link href="assets/lib/owl.carousel/dist/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/lib/owl.carousel/dist/assets/owl.theme.default.min.css" rel="stylesheet">
+  <!-- Main stylesheet and color file-->
+  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/custom.css" rel="stylesheet"> 
+  <!-- Some of the style-->
+  <style>
+      /* Always set the map height explicitly to define the size of the div
+      * element that contains the map. */
+      #map {
+        height: 600px;
+        width:960px;
+        margin-left:200px;
+        margin-top:100px;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #description {
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+      }
+
+      #infowindow-content .title {
+        font-weight: bold;
+      }
+
+      #infowindow-content {
+        display: none;
+      }
+
+      #map #infowindow-content {
+        display: inline;
+      }
+
+      .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: Roboto;
+      }
+
+      #pac-container {
+        padding-bottom: 12px;
+        margin-right: 12px;
+      }
+
+      .pac-controls {
+        display: inline-block;
+        padding: 5px 11px;
+      }
+
+      .pac-controls label {
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+      }
+
+      #pac-input {
+        background-color: #fff;
+        font-family: Roboto;
+        font-size: 15px;
+        font-weight: 300;
+        margin-left: 12px;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+      }
+
+      #pac-input:focus {
+        border-color: #4d90fe;
+      }
+
+      #title {
+        color: #fff;
+        background-color: #4d90fe;
+        font-size: 25px;
+        font-weight: 500;
+        padding: 6px 12px;
+      }
+      #target {
+        width: 345px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <script src="assets/js/header.js"></script>
+        <section>
+          <div class="container">
+            <div class="text-center">
+            <br />
+            <h2>ArcGIS Zotero Map</h2>
+            <br />
+            <div id="viewDiv"></div>
+          </div>
+      </div>
+        </section>
+
+         <div id="map"></div>
+
+         <script>
+          var customLabel = {
+            restaurant: {
+              label: 'R'
+            },
+            bar: {
+              label: 'B'
+            }
+          };
+
+          function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+              center: new google.maps.LatLng(39.8283, -98.5795),
+              zoom: 4
+            });
+            var infoWindow = new google.maps.InfoWindow;
+
+          // Change this depending on the name of your PHP or XML file
+          downloadUrl('https://dzdaniel84.pythonanywhere.com/articles', function(data) {
+            console.log(data.response);
+
+            var resp = JSON.parse(data.response);
+            console.log(resp);
+
+            const json_list = resp.json_list.map((item, index) => ({
+              id: item.id,
+              title: item.title,
+              date: item.pub_year,
+              url: item.url,
+              lat: item.lat,
+              lng: item.lng,
+            }));
+
+            Array.prototype.forEach.call(json_list, function(markerElem) {
+              var id = markerElem.id;
+              var name = markerElem.title;
+              var point = new google.maps.LatLng(
+                parseFloat(markerElem.lat),
+                parseFloat(markerElem.lng));
+
+              var infowincontent = document.createElement('div');
+              var strong = document.createElement('strong');
+              strong.textContent = name
+              infowincontent.appendChild(strong);
+              infowincontent.appendChild(document.createElement('br'));
+
+              var text = document.createElement('text');
+              text.textContent = name;
+              infowincontent.appendChild(text);
+              var marker = new google.maps.Marker({
+                map: map,
+                position: point,
+              });
+              marker.addListener('click', function() {
+                infoWindow.setContent(infowincontent);
+                infoWindow.open(map, marker);
+              });
+            });
+          });
+        }
+
+        function downloadUrl(url, callback) {
+          var request = new XMLHttpRequest;
+
+          request.onreadystatechange = function() {
+            if (request.readyState == 4) {
+              request.onreadystatechange = doNothing;
+              callback(request, request.status);
+            }
+          };
+
+          request.open('GET', url, true);
+          request.send(null);
+        }
+
+        function doNothing() {}
+      </script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8rJhDsfwvIod9jVTfFm1Dtv2eO4QWqxQ&callback=initMap"
+      async defer></script>
+      <script src="assets/js/footer.js"></script>
+    </main>
+    <script src="assets/lib/jquery/dist/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+    <script src="assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="assets/lib/owl.carousel/dist/owl.carousel.min.js"></script>
+    <script src="assets/js/core.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+  </html>
