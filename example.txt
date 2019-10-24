@@ -1,0 +1,27 @@
+[
+    {
+        "id": 0,
+        "adds": [
+            {
+                "geometry": {
+                    "x": 0,
+                    "y": 0
+                },
+                "attributes": {
+                    "Year": 1997,
+                    "Author": "Smith, Joe",
+                    "Title": "Test",
+                    "PublicationTitle": "Test",
+                    "URL": "https://example.com",
+                    "Date": "2016-06-05",
+                    "DateAdded": "2019-08-22 21:15:50",
+                    "DateModified": "2019-08-22 21:15:50",
+                    "Access Date": "2019-08-22 21:15:50",
+                    "Extra": "Elm Avenue, Takoma",
+                    "Lat": 0,
+                    "Lon": 0
+                }
+            }
+        ]
+    }
+]
