@@ -50,12 +50,6 @@ document.write('<div class="znav-container znav " id="znav-container">\
                                                 <a href="/SelfishRouting/Form.html"> Send us data </a>\
                                             </li>\
                                             <li>\
-                                                <a href="/SelfishRouting/Official-citizens.html"> Elected officials </a>\
-                                            </li>\
-                                            <li>\
-                                                <a href="/SelfishRouting/Testimonials.html"> Testimonials </a>\
-                                            </li>\
-                                            <li>\
                                                 <a href="/SelfishRouting/Contact.html"> Contact </a>\
                                             </li>\
                                          </ul>\
@@ -63,9 +57,6 @@ document.write('<div class="znav-container znav " id="znav-container">\
                                     <li>\
                                         <a href="JavaScript:void(0)"> About </a>\
                                             <ul class="dropdown dropdown-push-left">\
-                                            <li>\
-                                                <a href="/SelfishRouting/Reviews.html"> Reviews </a>\
-                                            </li>\
                                             <li>\
                                                 <a href="/SelfishRouting/Blog/indexB.html"> Blog </a>\
                                             </li>\
