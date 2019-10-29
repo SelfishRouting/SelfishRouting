@@ -27,7 +27,7 @@ document.write('<div class="znav-container znav " id="znav-container">\
                                         </ul>\
                                     </li>\
                                     <li>\
-                                        <a href="JavaScript:void(0)"> Ressources </a>\
+                                        <a href="JavaScript:void(0)"> Resources </a>\
                                         <ul class="dropdown dropdown-push-left">\
                                             <li>\
                                                 <a href="/SelfishRouting/Videos/indexV.html"> Videos </a>\
